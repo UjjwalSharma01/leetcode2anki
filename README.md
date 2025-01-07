@@ -20,7 +20,7 @@ LeetCode2Anki is a userscript that helps you add solved problems from LeetCode t
      - [Violentmonkey](https://violentmonkey.github.io/)
 
 4. **Install the LeetCode2Anki Userscript**
-   - Once your userscript manager is installed, install the [LeetCode2Anki](https://raw.githubusercontent.com/krmanik/leetcode2anki/refs/heads/main/dist/leetcode2anki.user.js) script.
+   - Once your userscript manager is installed, install the [LeetCode2Anki](https://raw.githubusercontent.com/krmanik/leetcode2anki/refs/heads/main/leetcode2anki.user.js) script.
 
 ## Installation Guide
 
