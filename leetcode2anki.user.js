@@ -160,8 +160,8 @@
     async function ensureLeetCodeDeckExists() {
         try {
             const result = await invoke('deckNames', 6);
-            if (!result.includes('LeetCode')) {
-                await invoke('createDeck', 6, { deck: 'LeetCode' });
+            if (!result.includes(deckName)) {
+                await invoke('createDeck', 6, { deck: deckName });
             }
         } catch (error) {
             alert(`Error: ${error}`);
