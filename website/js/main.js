@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize demo steps
     initDemoSteps();
     
-    // Initialize installation tabs
+    // Initialize installation tabs with fix for content visibility
     initInstallationTabs();
     
     // Initialize copy code functionality
@@ -24,6 +24,12 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize enhanced features
     initEnhancedFeatures();
+    
+    // Fix learning resources section positioning
+    fixLearningResourcesPosition();
+    
+    // Handle window resize events for responsive adjustments
+    window.addEventListener('resize', fixLearningResourcesPosition);
 });
 
 // Particle background - Update to be more efficient on mobile
@@ -183,18 +189,36 @@ function initDemoSteps() {
     startAutoPlay();
 }
 
-// Installation tab functionality
+// Installation tab functionality - Updated with fixes for tab visibility
 function initInstallationTabs() {
     const tabButtons = document.querySelectorAll('.installation-tab');
     const tabPanels = document.querySelectorAll('.installation-panel');
     
     if (tabButtons.length === 0 || tabPanels.length === 0) return;
     
+    // Fix: Make sure all panels except the first one are explicitly hidden
+    tabPanels.forEach((panel, idx) => {
+        if (idx !== 0) {
+            panel.classList.add('hidden');
+        }
+        panel.classList.remove('active');
+    });
+    
+    // Activate the first tab and panel by default
+    if (tabButtons.length > 0 && tabPanels.length > 0) {
+        tabButtons[0].classList.add('active');
+        tabPanels[0].classList.remove('hidden');
+        tabPanels[0].classList.add('active');
+    }
+    
     tabButtons.forEach(button => {
         button.addEventListener('click', () => {
             // Remove active class from all buttons and panels
             tabButtons.forEach(btn => btn.classList.remove('active'));
-            tabPanels.forEach(panel => panel.classList.remove('active'));
+            tabPanels.forEach(panel => {
+                panel.classList.remove('active');
+                panel.classList.add('hidden'); // Ensure all panels are hidden first
+            });
             
             // Add active class to current button
             button.classList.add('active');
@@ -204,6 +228,18 @@ function initInstallationTabs() {
             const panel = document.getElementById(target);
             if (panel) {
                 panel.classList.add('active');
+                panel.classList.remove('hidden'); // Unhide the active panel
+                
+                // Force a reflow to ensure CSS transitions work
+                panel.offsetHeight;
+                
+                // Create a target for page jump if necessary
+                if (panel.offsetTop < window.pageYOffset) {
+                    window.scrollTo({
+                        top: document.querySelector('#installation').offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
             }
         });
     });
@@ -223,10 +259,10 @@ function initInstallationTabs() {
             if (!startX || !startY) return;
             
             let diffX = startX - e.changedTouches[0].clientX;
-            let diffY = startY - e.changedTouches[0].clientY;
+            let diffY = Math.abs(startY - e.changedTouches[0].clientY);
             
-            // If horizontal swipe is more prominent than vertical
-            if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > threshold) {
+            // Only process horizontal swipes (not vertical scrolling)
+            if (Math.abs(diffX) > diffY && Math.abs(diffX) > threshold) {
                 // Find current active tab
                 const activeTab = document.querySelector('.installation-tab.active');
                 const tabs = Array.from(document.querySelectorAll('.installation-tab'));
@@ -239,7 +275,7 @@ function initInstallationTabs() {
                 } else {
                     // Swipe right, go to previous tab if possible
                     const prevTab = tabs[currentIndex - 1];
-                    if (prevTab) prevTab.click();
+                    if (prevTab) prevTab.click(); // FIXED: Changed nextTab to prevTab
                 }
             }
             
@@ -247,6 +283,43 @@ function initInstallationTabs() {
             startY = null;
         }, false);
     }
+    
+    // Add progress bar functionality
+    initInstallProgressBar();
+}
+
+// Installation progress bar functionality
+function initInstallProgressBar() {
+    const installationTabs = document.querySelectorAll('.installation-tab');
+    if (installationTabs.length === 0) return;
+    
+    // Create progress bar container if it doesn't exist
+    let progressBarContainer = document.querySelector('.installation-progress');
+    if (!progressBarContainer) {
+        progressBarContainer = document.createElement('div');
+        progressBarContainer.classList.add('installation-progress', 'w-full', 'bg-gray-700', 'h-1', 'mt-4');
+        
+        const progressBar = document.createElement('div');
+        progressBar.classList.add('progress-bar', 'bg-primary-500', 'h-full', 'transition-all', 'duration-500');
+        progressBar.style.width = '25%'; // Start with first step
+        progressBarContainer.appendChild(progressBar);
+        
+        // Insert after the tabs
+        const tabsContainer = installationTabs[0].closest('nav');
+        if (tabsContainer) {
+            tabsContainer.after(progressBarContainer);
+        }
+    }
+    
+    const progressBar = progressBarContainer.querySelector('.progress-bar');
+    
+    // Update progress when tab is clicked
+    installationTabs.forEach((tab, index) => {
+        tab.addEventListener('click', function() {
+            const progress = ((index + 1) / installationTabs.length) * 100;
+            progressBar.style.width = `${progress}%`;
+        });
+    });
 }
 
 // Copy code functionality
@@ -279,7 +352,7 @@ function initCodeCopy() {
     });
 }
 
-// GSAP animations
+// GSAP animations - Fixed selectors
 function initAnimations() {
     if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
     
@@ -289,53 +362,57 @@ function initAnimations() {
     const isMobile = window.innerWidth < 768;
     const animationDuration = isMobile ? 0.5 : 0.8;
     
-    // Feature cards animation with updated duration
-    gsap.utils.toArray('.feature-card').forEach((card, i) => {
-        gsap.from(card, {
+    // Feature cards animation with updated duration - Fix selector
+    const featureCards = document.querySelectorAll('.feature-card');
+    if (featureCards.length > 0) {
+        gsap.from(featureCards, {
             y: 50,
             opacity: 0,
             duration: animationDuration,
             ease: "power3.out",
+            stagger: isMobile ? 0.05 : 0.1,
             scrollTrigger: {
-                trigger: card,
-                start: "top 85%", // Show animations earlier on mobile
+                trigger: featureCards[0].parentElement,
+                start: "top 85%",
                 toggleActions: "play none none none"
-            },
-            delay: isMobile ? (i * 0.05) : (i * 0.1) // Shorter delays on mobile
+            }
         });
-    });
+    }
     
-    // Installation steps animation
-    gsap.utils.toArray('.installation-tab').forEach((tab, i) => {
-        gsap.from(tab, {
+    // Installation steps animation - Fix selector
+    const installationTabs = document.querySelectorAll('.installation-tab');
+    if (installationTabs.length > 0) {
+        gsap.from(installationTabs, {
             y: 20,
             opacity: 0,
             duration: 0.5,
+            stagger: 0.1,
             ease: "power2.out",
             scrollTrigger: {
                 trigger: '#installation',
                 start: "top 60%",
                 toggleActions: "play none none none"
             },
-            delay: 0.2 + i * 0.1
+            delay: 0.2
         });
-    });
+    }
     
-    // FAQ items animation
-    gsap.utils.toArray('#faq .bg-darkcard').forEach((item, i) => {
-        gsap.from(item, {
+    // FAQ items animation - Fix selector
+    const faqItems = document.querySelectorAll('#faq .faq-item');
+    if (faqItems.length > 0) {
+        gsap.from(faqItems, {
             y: 30,
             opacity: 0,
             duration: 0.6,
+            stagger: 0.1,
             ease: "power2.out",
             scrollTrigger: {
-                trigger: item,
+                trigger: '#faq',
                 start: "top 85%",
                 toggleActions: "play none none none"
-            },
-            delay: i * 0.1
+            }
         });
-    });
+    }
 }
 
 // Add this function to improve responsiveness
@@ -357,6 +434,133 @@ function addResponsiveHelpers() {
             return;
         }
     }, { passive: true });
+    
+    // Improve FAQ animations
+    initFaqAnimations();
+}
+
+// Fix learning resources section positioning to avoid overlaps
+function fixLearningResourcesPosition() {
+    const learningSection = document.querySelector('.learning-resources-section');
+    const floatingCards = document.querySelector('.floating-cards');
+    
+    if (!learningSection) return;
+    
+    // Default margin for the learning section
+    let marginTop = '3.3rem'; // Increased by 10% from 3rem
+    
+    // On smaller screens or when floating cards aren't visible, keep default margin
+    if (window.innerWidth < 1024 || !floatingCards) {
+        learningSection.style.marginTop = marginTop;
+        return;
+    }
+    
+    // Get the height of the floating cards container
+    const floatingCardsHeight = floatingCards.offsetHeight;
+    
+    // Calculate appropriate margin based on the cards' height and position
+    if (window.innerWidth >= 1280) {
+        marginTop = Math.max(floatingCardsHeight - 90, 176) + 'px'; // Increased by 10%
+    } else {
+        marginTop = Math.max(floatingCardsHeight - 180, 132) + 'px'; // Increased by 10%
+    }
+    
+    // Apply the adjusted margin with an extra buffer
+    learningSection.style.marginTop = marginTop;
+    
+    // Add a bit of animation for smooth transition
+    learningSection.style.transition = 'margin-top 0.3s ease-in-out';
+}
+
+// New function to specifically handle FAQ animations
+function initFaqAnimations() {
+    // Wait for Alpine.js to be ready
+    document.addEventListener('alpine:initialized', () => {
+        // Find all FAQ items
+        const faqItems = document.querySelectorAll('.faq-item');
+        
+        faqItems.forEach(item => {
+            const button = item.querySelector('button');
+            const content = item.querySelector('[x-collapse]');
+            
+            if (button && content) {
+                // Make opening/closing smoother
+                button.addEventListener('click', () => {
+                    // Add animation classes to content children for smooth transition
+                    const contentElements = content.querySelectorAll('p, code, ul, ol, li');
+                    
+                    // Check if this item is opening or closing based on Alpine's data state
+                    setTimeout(() => {
+                        // Alpine.js needs a moment to update its internal state
+                        const isOpening = content.style.height !== '0px';
+                        
+                        if (isOpening) {
+                            // When opening, fade and slide in the content
+                            contentElements.forEach((el, i) => {
+                                el.style.opacity = '0';
+                                el.style.transform = 'translateY(20px)'; // Start from further down
+                                
+                                // Stagger the animations for a nicer effect
+                                setTimeout(() => {
+                                    el.style.opacity = '1';
+                                    el.style.transform = 'translateY(0)';
+                                }, 100 + (i * 100)); // Slower animation with more delay
+                            });
+                            
+                            // Add a nice box shadow effect when open
+                            item.style.boxShadow = '0 10px 25px -5px rgba(20, 184, 166, 0.1), 0 10px 10px -5px rgba(20, 184, 166, 0.04)';
+                            
+                            // Ensure proper height before animation starts
+                            // This prevents the jumping effect during transition
+                            setTimeout(() => {
+                                content.style.height = content.scrollHeight + 'px';
+                            }, 50);
+                        } else {
+                            // Reset box shadow when closing
+                            item.style.boxShadow = '';
+                            
+                            // Fade out content for smoother closing
+                            contentElements.forEach(el => {
+                                el.style.opacity = '0';
+                                el.style.transform = 'translateY(10px)';
+                            });
+                        }
+                    }, 50); // Slightly longer delay to ensure Alpine has updated
+                });
+                
+                // Observe content height changes to adjust spacing
+                const observer = new MutationObserver((mutations) => {
+                    // Add a slight delay to let the animation complete
+                    setTimeout(() => {
+                        document.dispatchEvent(new CustomEvent('faq-expanded'));
+                    }, 500); // Increase delay to match slower transitions
+                });
+                
+                observer.observe(content, { attributes: true });
+            }
+        });
+        
+        // Listen for the custom event to handle smooth transitions
+        document.addEventListener('faq-expanded', () => {
+            // Smooth scroll to the currently open FAQ item if it's not fully visible
+            const openItem = document.querySelector('.faq-item[x-data] [x-show]:not([x-show="false"])');
+            if (openItem) {
+                const rect = openItem.getBoundingClientRect();
+                const isFullyVisible = 
+                    rect.top >= 0 &&
+                    rect.bottom <= window.innerHeight;
+                
+                if (!isFullyVisible) {
+                    const headerOffset = 100; // Adjust for fixed header
+                    const itemPosition = rect.top + window.pageYOffset;
+                    window.scrollTo({
+                        top: itemPosition - headerOffset,
+                        behavior: 'smooth'
+                    });
+                }
+            }
+        });
+    });
 }
 
 // Initialize enhanced interactive features
@@ -512,25 +716,28 @@ document.addEventListener('DOMContentLoaded', function() {
     if (typeof gsap !== 'undefined') {
         gsap.registerPlugin(ScrollTrigger);
         
-        // Create timeline for installation section
-        gsap.utils.toArray('.installation-panel').forEach((panel, i) => {
+        // Create timeline for installation section - Fix selector
+        const installationPanels = document.querySelectorAll('.installation-panel');
+        
+        installationPanels.forEach((panel) => {
             const cards = panel.querySelectorAll('.bg-darkcard');
-            
-            gsap.timeline({
-                scrollTrigger: {
-                    trigger: panel,
-                    start: "top 80%",
-                    toggleActions: "play none none none",
-                    markers: false
-                }
-            })
-            .from(cards, {
-                y: 30,
-                opacity: 0,
-                stagger: 0.15,
-                duration: 0.6,
-                ease: "power2.out"
-            });
+            if (cards.length > 0) {
+                gsap.timeline({
+                    scrollTrigger: {
+                        trigger: panel,
+                        start: "top 80%",
+                        toggleActions: "play none none none",
+                        markers: false
+                    }
+                })
+                .from(cards, {
+                    y: 30,
+                    opacity: 0,
+                    stagger: 0.15,
+                    duration: 0.6,
+                    ease: "power2.out"
+                });
+            }
         });
     }
 });
@@ -580,4 +787,21 @@ window.addEventListener('load', function() {
     document.querySelectorAll('.feature-card, .learning-resources-section').forEach(el => {
         el.classList.add('animate-on-scroll');
     });
+    
+    // Ensure the first installation panel is visible
+    const firstPanel = document.getElementById('anki-step');
+    if (firstPanel) {
+        firstPanel.classList.add('active');
+        firstPanel.classList.remove('hidden');
+        firstPanel.style.display = 'block'; // Force display to be visible
+        
+        // Force reflow for CSS transitions to work
+        firstPanel.offsetHeight;
+    }
+    
+    // Ensure the first tab button is highlighted
+    const firstTab = document.querySelector('.installation-tab');
+    if (firstTab) {
+        firstTab.classList.add('active');
+    }
 });

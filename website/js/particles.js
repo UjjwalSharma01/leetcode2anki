@@ -21,6 +21,12 @@ class ParticleBackground {
         this.connectionDistance = this.isMobile ? 100 : 180;
         this.particleColor = '#14b8a6'; // Teal color
         this.lineColor = 'rgba(20, 184, 166, '; // Teal color with dynamic opacity
+        
+        // Add state tracking for animation
+        this.isRunning = true;
+        this.lastFrameTime = 0;
+        this.fps = 60; // Target FPS
+        this.fpsInterval = 1000 / this.fps;
 
         // Setup
         this.resizeCanvas();
@@ -33,6 +39,9 @@ class ParticleBackground {
         window.addEventListener('touchmove', (event) => this.trackTouch(event), { passive: true });
         window.addEventListener('mouseout', () => this.resetMouse());
         window.addEventListener('touchend', () => this.resetMouse());
+        
+        // Make instance available globally for other scripts
+        window.particleBackground = this;
     }
 
     resizeCanvas() {
@@ -78,11 +87,22 @@ class ParticleBackground {
         this.mousePosition.y = null;
     }
 
-    animate() {
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.updateParticles();
-        this.drawConnections();
-        requestAnimationFrame(() => this.animate());
+    // Override animate method to respect pause state and control frame rate
+    animate(timestamp) {
+        if (!this.isRunning) return;
+        
+        const elapsed = timestamp - this.lastFrameTime;
+        
+        // Only render if enough time has passed for our target frame rate
+        if (elapsed > this.fpsInterval) {
+            this.lastFrameTime = timestamp - (elapsed % this.fpsInterval);
+            
+            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+            this.updateParticles();
+            this.drawConnections();
+        }
+        
+        requestAnimationFrame((time) => this.animate(time));
     }
 
     updateParticles() {
@@ -166,13 +186,27 @@ class ParticleBackground {
             }
         }
     }
+    
+    // Add methods to control animation
+    pauseAnimation() {
+        this.isRunning = false;
+    }
+    
+    resumeAnimation() {
+        if (!this.isRunning) {
+            this.isRunning = true;
+            this.animate();
+        }
+    }
 }
 
-// Initialize when DOM is ready
+// Initialize when DOM is ready - Modified to expose the instance
 document.addEventListener('DOMContentLoaded', function() {
     const particleCanvas = document.getElementById('particle-canvas');
     if (particleCanvas) {
-        new ParticleBackground('particle-canvas');
+        const particlesInstance = new ParticleBackground('particle-canvas');
+        // Expose for external reference if needed
+        window.particleBackgroundInstance = particlesInstance;
     } else {
         console.warn('Particle canvas element not found');
     }

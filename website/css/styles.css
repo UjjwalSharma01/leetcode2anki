@@ -42,6 +42,19 @@
 .installation-tab.active {
     color: #14b8a6;
     border-color: #14b8a6;
+    font-weight: 600;
+    position: relative;
+}
+
+.installation-tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #14b8a6;
+    animation: pulse 1.5s infinite;
 }
 
 .installation-number {
@@ -116,6 +129,48 @@
     transform: translateY(-5px);
 }
 
+/* Improved floating cards styling */
+.floating-cards {
+    pointer-events: none; /* Allow clicking through when overlapping with content */
+}
+
+.floating-cards .js-tilt {
+    pointer-events: auto; /* Re-enable pointer events for the cards themselves */
+}
+
+.leetcode-card {
+    max-width: 110%; /* Increased from 100% */
+    overflow: hidden; /* Prevent content overflow */
+}
+
+.leetcode-card pre {
+    font-size: 0.88rem; /* Increased by 10% from 0.8rem */
+    line-height: 1.4;
+    max-height: 308px; /* Increased by 10% from 280px */
+    overflow-y: auto; /* Allow vertical scrolling if needed */
+}
+
+/* Ensure proper display of the twoSum example function */
+.leetcode-card pre code {
+    display: block;
+    padding: 0.55rem; /* Increased by 10% from 0.5rem */
+    max-width: 100%;
+    overflow-x: auto;
+    white-space: pre;
+    tab-size: 2;
+}
+
+/* Ensure line numbers don't cause horizontal overflow */
+.line-numbers .line-numbers-rows {
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+    padding-right: 0.55em; /* Increased by 10% from 0.5em */
+}
+
+/* Ensure anki card doesn't overlap */
+.anki-card {
+    max-width: 330px; /* Increased by 10% from 300px */
+}
+
 /* Feature Cards */
 .feature-card {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -126,14 +181,40 @@
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
 }
 
-/* Installation Panel */
+/* Installation Panel - Updated for better visibility */
 .installation-panel {
     display: none;
+    opacity: 0;
+    transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+    transform: translateY(10px);
 }
 
 .installation-panel.active {
-    display: block;
-    animation: fadeIn 0.3s ease;
+    display: block !important; /* Force display with !important */
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Fix to make hidden truly hidden */
+.installation-panel.hidden {
+    display: none !important;
+}
+
+/* Add new progress bar styling */
+.installation-progress {
+    position: relative;
+    height: 4px;
+    background-color: #1e293b;
+    border-radius: 2px;
+    overflow: hidden;
+    margin-top: 0.5rem;
+}
+
+.progress-bar {
+    background-color: #14b8a6;
+    height: 100%;
+    width: 25%; /* Start with first step */
+    transition: width 0.5s ease;
 }
 
 @keyframes fadeIn {
@@ -280,15 +361,27 @@
     width: 100%;
 }
 
-/* Better spacing for demo container on mobile */
-@media (max-width: 768px) {
-    .demo-container {
-        height: 300px;
-    }
-    
-    .browser-content {
-        height: calc(100% - 2rem);
-    }
+/* Fix FAQ items to maintain independent heights during expansion */
+.faq-item {
+    height: auto;
+    align-self: flex-start;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 1rem;
+}
+
+/* Ensure collapsible content doesn't affect grid layout */
+#faq .grid {
+    align-items: flex-start;
+}
+
+/* Fix x-collapse transition to prevent affecting sibling elements */
+[x-cloak][x-collapse] {
+    height: auto !important;
+    overflow: hidden;
+    transition-property: height, opacity;
+    transition-duration: 0.3s;
 }
 
 /* Fix table responsive issues */
@@ -435,11 +528,72 @@
 /* Enhanced FAQ section */
 .faq-item {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 1rem;
 }
 
+/* Modify the existing hover effect for better sequential display */
 .faq-item:hover {
     transform: translateY(-3px);
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+}
+
+/* Improve FAQ content styling with better padding */
+.faq-item [x-show] {
+    padding-bottom: 2.5rem; /* Added more padding at the bottom */
+    padding-top: 0.75rem; /* Add top padding for better spacing */
+    transition: all 0.5s ease-in-out; /* Make transition more noticeable */
+}
+
+/* Improve collapse animation */
+[x-collapse] {
+    transition: height 0.5s ease-in-out, opacity 0.5s ease-in-out, padding 0.5s ease-in-out !important;
+    overflow: hidden !important;
+}
+
+/* Add smooth entrance for content */
+.faq-item [x-show] p, 
+.faq-item [x-show] code,
+.faq-item [x-show] ul,
+.faq-item [x-show] ol,
+.faq-item [x-show] li {
+    transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+/* Fix for Alpine.js x-collapse animation */
+[x-collapse] {
+    overflow: hidden !important;
+    transition-property: height !important;
+    height: 0 !important;
+}
+
+[x-collapse].x-collapse-active {
+    height: auto !important;
+    transition: height 0.5s ease-in-out !important; /* Slow down transition */
+}
+
+/* Add indicator for FAQ item hover/focus */
+.faq-item button:hover,
+.faq-item button:focus {
+    background-color: rgba(255, 255, 255, 0.05); /* Subtle highlight on hover */
+    transition: background-color 0.3s ease;
+}
+
+/* Add transition for the arrow in FAQ items */
+.faq-item button svg {
+    transition: transform 0.5s ease-in-out; /* Slow down arrow rotation */
+}
+
+/* Fix for Alpine.js x-collapse animation */
+[x-collapse] {
+    overflow: hidden !important;
+    transition-property: height !important;
+    height: 0 !important;
+}
+
+[x-collapse].x-collapse-active {
+    height: auto !important;
 }
 
 /* Fix table display on mobile */
@@ -490,4 +644,36 @@
         overflow-x: visible;
         overflow-y: visible;
     }
+}
+
+/* Fix for Alpine.js Collapse Plugin - Update x-collapse styles to fix animation */
+[x-collapse] {
+    transition: height 0.5s ease-in-out, opacity 0.5s ease-in-out !important;
+    overflow: hidden !important;
+    height: 0;
+}
+
+[x-collapse].x-collapse-active {
+    height: auto;
+}
+
+/* Improve FAQ content styling with better padding */
+.faq-item [x-show] {
+    padding-bottom: 2.5rem; /* Added more padding at the bottom */
+    padding-top: 0.75rem; /* Add top padding for better spacing */
+    transition: all 0.5s ease-in-out; /* Make transition more noticeable */
+}
+
+/* Prevent duplicate animations due to multiple x-collapse transitions */
+.faq-item {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 100%;
+    max-width: 100%; 
+    margin-bottom: 1rem;
+}
+
+/* Add specific style for the FAQ content to prevent height issues */
+.faq-item [x-collapse] {
+    display: block;
+    width: 100%;
 }

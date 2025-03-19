@@ -1,0 +1,223 @@
+/* Custom fixes for specific layout issues */
+
+/* Fix for the learning resources section to prevent overlapping */
+.learning-resources-section {
+    margin-top: 6rem !important; /* Increased from 4rem to create more space */
+    position: relative;
+    z-index: 1; /* Ensure it's above other elements */
+}
+
+/* Adjust spacing on different screen sizes */
+@media (min-width: 1024px) {
+    .learning-resources-section {
+        margin-top: 7rem !important; /* Increased from 5rem for more space */
+    }
+}
+
+/* Add extra space when floating cards are present */
+@media (min-width: 1280px) {
+    .learning-resources-section {
+        margin-top: 12rem !important; /* Increased from 10rem to accommodate larger cards */
+    }
+}
+
+/* Ensure the floating cards don't overlap on smaller screens */
+@media (max-width: 1279px) and (min-width: 1024px) {
+    .floating-cards {
+        transform: scale(0.88); /* Increased scale by 10% from 0.8 */
+        transform-origin: top right;
+    }
+}
+
+/* Better positioning for floating cards */
+.floating-cards {
+    position: absolute;
+    top: 20px;
+    right: 10px;
+    z-index: 10; /* Ensure it's above the content but below the learning resources */
+    max-width: 440px; /* Increased by 10% from 400px */
+}
+
+/* Adjust the position of cards on larger screens */
+@media (min-width: 1280px) {
+    .floating-cards {
+        right: 30px;
+        top: 40px;
+        transform: scale(1.1); /* Add 10% scale increase for larger screens */
+    }
+}
+
+/* Additional fix for the floating card's code display to ensure proper wrapping */
+.leetcode-card pre {
+    max-width: 100%;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+/* Improve positioning of the highlighted line in code example */
+.leetcode-card pre .line-highlight {
+    background: rgba(20, 184, 166, 0.1);
+    display: block;
+}
+
+/* Additional CSS fixes for installation tabs visibility issues */
+
+/* Force installation panels to respect display settings */
+.installation-panel {
+    display: none !important;
+}
+
+.installation-panel.active {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* Ensure tabs are visible and properly styled */
+.installation-tabs-container {
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none; /* Hide scrollbar Firefox */
+    -ms-overflow-style: none; /* Hide scrollbar IE/Edge */
+    padding-bottom: 5px;
+}
+
+.installation-tabs-container::-webkit-scrollbar {
+    display: none; /* Hide scrollbar Chrome/Safari */
+}
+
+.installation-tabs-wrapper {
+    display: inline-flex;
+    min-width: max-content;
+    flex-wrap: nowrap;
+}
+
+/* Make tab labels more visible */
+.installation-tab {
+    color: #9ca3af;
+    border-color: transparent;
+    transition: all 0.3s ease;
+    position: relative;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    white-space: nowrap;
+}
+
+.installation-tab:hover {
+    color: #d1d5db;
+}
+
+.installation-tab.active {
+    color: #14b8a6 !important;
+    border-color: #14b8a6 !important;
+    font-weight: 600;
+}
+
+/* Add visual indicator for active tab */
+.installation-tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #14b8a6;
+    border-radius: 2px;
+    box-shadow: 0 0 8px rgba(20, 184, 166, 0.6);
+}
+
+/* Make installation numbers more prominent */
+.installation-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 24px;
+    min-height: 24px;
+    border-radius: 50%;
+    background-color: #1e293b;
+    color: white;
+    font-weight: bold;
+}
+
+.installation-tab.active .installation-number {
+    background-color: #134e4a;
+    box-shadow: 0 0 5px rgba(20, 184, 166, 0.5);
+}
+
+/* Add aria attributes for accessibility */
+[role="tab"][aria-selected="true"] {
+    font-weight: bold;
+}
+
+/* Make sure tab content is always visible when active */
+.installation-content {
+    position: relative;
+    min-height: 400px; /* Ensure there's always space for content */
+}
+
+/* Fix for installation tab visibility */
+.installation-tabs-container .installation-tab {
+    display: inline-flex !important;
+    align-items: center;
+    opacity: 1 !important;
+    visibility: visible !important;
+    background: transparent;
+    position: relative;
+    padding: 1rem !important;
+    border-bottom: 2px solid transparent;
+}
+
+.installation-tabs-container .installation-tab.active {
+    border-bottom-color: #14b8a6 !important;
+}
+
+.installation-tabs-container .installation-tab span {
+    opacity: 1 !important;
+    visibility: visible !important;
+    color: #9ca3af;
+}
+
+.installation-tabs-container .installation-tab.active span {
+    color: #14b8a6 !important;
+}
+
+/* Ensure the step numbers are visible */
+.installation-tabs-container .installation-number {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    margin-right: 0.5rem;
+    background-color: #1e293b;
+    border-radius: 9999px;
+    color: white;
+    font-weight: bold;
+    opacity: 1 !important;
+}
+
+.installation-tabs-container .installation-tab.active .installation-number {
+    background-color: #14b8a6;
+}
+
+/* Force visibility of step titles */
+.installation-tabs-container .installation-tab span:last-child {
+    display: inline-block !important;
+    font-size: 0.875rem;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+/* Remove any conflicting transitions */
+.installation-tabs-container * {
+    opacity: 1 !important;
+    transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease !important;
+}
+
+/* Ensure content area stays visible */
+.installation-content {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}

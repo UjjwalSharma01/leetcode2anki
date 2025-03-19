@@ -5,18 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>LeetCode2Anki Plus | Enhance Your Coding Practice</title>
     <meta name="description" content="Save LeetCode problems to Anki for spaced repetition learning and track your progress with Google Sheets integration">
+    
+    <!-- For development only. For production, use the compiled CSS file -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <!-- Uncomment this in production and remove the CDN above -->
+    <!-- <link rel="stylesheet" href="css/tailwind.css"> -->
+
+    <script defer src="https://unpkg.com/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.2/dist/vanilla-tilt.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-clike.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-cpp.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/custom-fixes.css">
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -398,29 +406,29 @@
 
         <div class="relative">
             <div class="installation-steps">
-                <!-- Step Tabs -->
-                <div class="border-b border-gray-700 mb-8 md:mb-10 overflow-x-auto">
-                    <nav class="-mb-px flex space-x-3 sm:space-x-4 md:space-x-8 px-1" aria-label="Tabs">
-                        <button class="installation-tab active whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm" data-target="anki-step">
+                <!-- Step Tabs - Updated with stronger styling and better structure -->
+                <div class="border-b border-gray-700 mb-8 md:mb-10 overflow-x-auto installation-tabs-container">
+                    <nav class="-mb-px flex space-x-3 sm:space-x-4 md:space-x-8 px-1 installation-tabs-wrapper" aria-label="Tabs">
+                        <button class="installation-tab active whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm" data-target="anki-step" role="tab">
                             <span class="installation-number">1</span>
                             <span class="ml-2">Setup Anki</span>
                         </button>
-                        <button class="installation-tab whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm" data-target="sheets-step">
+                        <button class="installation-tab whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm" data-target="sheets-step" role="tab">
                             <span class="installation-number">2</span>
                             <span class="ml-2">Setup Google Sheets</span>
                         </button>
-                        <button class="installation-tab whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm" data-target="script-step">
+                        <button class="installation-tab whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm" data-target="script-step" role="tab">
                             <span class="installation-number">3</span>
                             <span class="ml-2">Install Script</span>
                         </button>
-                        <button class="installation-tab whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm" data-target="config-step">
+                        <button class="installation-tab whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm" data-target="config-step" role="tab">
                             <span class="installation-number">4</span>
                             <span class="ml-2">Configuration</span>
                         </button>
                     </nav>
                 </div>
 
-                <!-- Step Content -->
+                <!-- Step Content - Keep the existing content but add a self-initialization script -->
                 <div class="installation-content px-1 sm:px-0">
                     <!-- Step 1: Anki Setup -->
                     <div id="anki-step" class="installation-panel active">
@@ -468,27 +476,186 @@
                             <div class="md:col-span-3">
                                 <h3 class="text-lg font-medium text-white mb-4">Setting Up Google Sheets Integration</h3>
                                 <div class="space-y-4 text-gray-300">
-                                    <p>A key feature of LeetCode2Anki Plus is the comprehensive Google Sheets integration that offers:</p>
+                                    <p>A key feature of LeetCode2Anki Plus is the comprehensive Google Sheets integration that automatically tracks your solved problems:</p>
                                     <ul class="list-disc pl-5 space-y-2">
                                         <li class="flex items-start">
                                             <svg class="h-5 w-5 text-green-500 mr-2 mt-0.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                                             </svg>
-                                            <span><strong class="text-green-400">Automated Tracking:</strong> Every solved problem automatically logged with timestamps, difficulty, and tags</span>
+                                            <span><strong class="text-green-400">Automated Tracking:</strong> Every solved problem automatically logged with timestamps and details</span>
                                         </li>
-                                        <!-- Other list items remain similar -->
+                                        <li class="flex items-start">
+                                            <svg class="h-5 w-5 text-green-500 mr-2 mt-0.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                            </svg>
+                                            <span><strong class="text-green-400">Progress Visualization:</strong> See patterns in your problem-solving journey</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <svg class="h-5 w-5 text-green-500 mr-2 mt-0.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                            </svg>
+                                            <span><strong class="text-green-400">Topic Coverage:</strong> Easily identify which problem categories need more practice</span>
+                                        </li>
                                     </ul>
-                                    <p>Follow these steps to set up the Google Sheets integration:</p>
+                                    <p>Complete these steps to set up the Google Sheets integration:</p>
                                     <ol class="list-decimal pl-5 space-y-4">
                                         <li>Go to <a href="https://script.google.com/" target="_blank" class="text-primary-400 hover:text-primary-300">Google Apps Script</a> (sign in with your Google account)</li>
-                                       
+                                        <li>Click "New project" to create a new Apps Script project</li>
+                                        <li>Replace the default code with the code provided below</li>
+                                        <li>Click the disk icon to save (or press Ctrl+S/Cmd+S)</li>
+                                        <li>Name your project (e.g., "LeetCode2AnkiTracker")</li>
+                                        <li>Create a Google Sheet by going to <a href="https://sheets.google.com/" target="_blank" class="text-primary-400 hover:text-primary-300">Google Sheets</a></li>
+                                        <li>Name the first 7 columns: <code class="bg-gray-700 px-1 rounded">Timestamp, ID, Title, Difficulty, Tags, URL, Status</code></li>
+                                        <li>Copy the spreadsheet ID from the URL (the long string between <code class="bg-gray-700 px-1 rounded">/d/</code> and <code class="bg-gray-700 px-1 rounded">/edit</code>)</li>
+                                        <li>Replace <code class="bg-gray-700 px-1 rounded">YOUR_SPREADSHEET_ID</code> in the Apps Script code with your actual spreadsheet ID</li>
+                                        <li>Deploy the web app by clicking "Deploy" > "New deployment"</li>
+                                        <li>Set "Who has access" to "Anyone" and click "Deploy"</li>
+                                        <li>Copy the web app URL - you'll need it for the script configuration</li>
                                     </ol>
+                                    <div class="bg-darkcard border border-gray-700 rounded-lg p-4 mt-6">
+                                        <div class="flex items-start">
+                                            <div class="flex-shrink-0">
+                                                <svg class="h-5 w-5 text-yellow-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2h-1V9z" clip-rule="evenodd" />
+                                                </svg>
+                                            </div>
+                                            <div class="ml-3">
+                                                <h3 class="text-sm font-medium text-yellow-300">Google Sheets Code</h3>
+                                                <pre class="mt-2 text-sm text-gray-400 overflow-auto max-h-60"><code class="language-javascript">/**
+ * Main entry point for web requests
+ * This function delegates to the appropriate handler based on the HTTP method
+ */
+function doRequest(request) {
+  const method = request.method || 'GET';
+  
+  if (method === 'POST') {
+    return doPost(request);
+  } else if (method === 'OPTIONS') {
+    return doOptions(request);
+  } else {
+    return doGet(request);
+  }
+}
+
+/**
+ * Handles OPTIONS requests for CORS preflight
+ */
+function doOptions(e) {
+  var lock = LockService.getScriptLock();
+  lock.tryLock(10000);
+  
+  var headers = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
+    'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
+    'Access-Control-Max-Age': '3600'
+  };
+  
+  return ContentService
+    .createTextOutput(JSON.stringify({"status": "success"}))
+    .setMimeType(ContentService.MimeType.JSON)
+    .setHeaders(headers);
+}
+
+/**
+ * Handles GET requests - returns a simple status for testing
+ */
+function doGet(e) {
+  var headers = {
+    'Access-Control-Allow-Origin': '*'
+  };
+  
+  return ContentService
+    .createTextOutput(JSON.stringify({
+      "status": "online", 
+      "message": "Google Sheets API is running"
+    }))
+    .setMimeType(ContentService.MimeType.JSON)
+    .setHeaders(headers);
+}
+
+/**
+ * Handles POST requests from the userscript
+ * Adds the problem data to a Google Sheet
+ */
+function doPost(e) {
+  // Set CORS headers
+  var headers = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
+    'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
+  };
+  
+  try {
+    // Replace with your sheet ID
+    const sheet = SpreadsheetApp.openById("YOUR_SPREADSHEET_ID").getActiveSheet();
+    const data = JSON.parse(e.postData.contents);
+    
+    // Validate required fields
+    if (!data.id || !data.title) {
+      return ContentService
+        .createTextOutput(JSON.stringify({
+          "error": "Missing required fields",
+          "result": "error"
+        }))
+        .setMimeType(ContentService.MimeType.JSON)
+        .setHeaders(headers);
+    }
+    
+    // Process the tags array
+    let tagsString = "";
+    if (data.tags && Array.isArray(data.tags)) {
+      tagsString = data.tags.join(", ");
+    }
+    
+    sheet.appendRow([
+      new Date(),
+      data.id || "",
+      data.title || "",
+      data.difficulty || "",
+      tagsString,
+      data.url || "",
+      data.status || "Pending"
+    ]);
+    
+    return ContentService
+      .createTextOutput(JSON.stringify({
+        "result": "success",
+        "message": "Data saved successfully"
+      }))
+      .setMimeType(ContentService.MimeType.JSON)
+      .setHeaders(headers);
+      
+  } catch (error) {
+    return ContentService
+      .createTextOutput(JSON.stringify({
+        "error": error.toString(),
+        "result": "error"
+      }))
+      .setMimeType(ContentService.MimeType.JSON)
+      .setHeaders(headers);
+  }
+}</code></pre>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="mt-8 md:mt-0 md:col-span-2">
                                 <div class="bg-darkcard border border-gray-700 p-6 rounded-lg shadow-lg h-full">
                                     <div class="flex flex-col items-center justify-center h-full">
-                                        <!-- Google Sheets demo content -->
+                                        <img src="https://i.imgur.com/TsYVNoE.png" alt="Google Sheets integration" class="max-w-full rounded-lg shadow-md installation-image mb-4">
+                                        <p class="text-sm text-gray-400 text-center">Your Google Sheets will automatically track all your solved problems</p>
+                                        <div class="mt-4 p-3 bg-gray-800/50 rounded-lg w-full">
+                                            <h4 class="text-sm font-semibold text-primary-400 mb-2">Common Fields Tracked:</h4>
+                                            <ul class="text-xs text-gray-400 space-y-1 list-disc pl-4">
+                                                <li>Problem ID & Title</li>
+                                                <li>Difficulty Level</li>
+                                                <li>Tags/Categories</li>
+                                                <li>Submission Date</li>
+                                                <li>Direct Link</li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -498,14 +665,156 @@
                     <!-- Step 3: Install Script -->
                     <div id="script-step" class="installation-panel hidden">
                         <div class="md:grid md:grid-cols-5 md:gap-8">
-                            <!-- Script installation content -->
+                            <div class="md:col-span-3">
+                                <h3 class="text-lg font-medium text-white mb-4">Installing the LeetCode2Anki Plus Script</h3>
+                                <div class="space-y-4 text-gray-300">
+                                    <p>To install the LeetCode2Anki Plus script, you need a userscript manager extension for your browser:</p>
+                                    <ol class="list-decimal pl-5 space-y-4">
+                                        <li>Install a userscript manager:
+                                            <ul class="list-disc pl-5 mt-2 space-y-1">
+                                                <li><a href="https://www.tampermonkey.net/" target="_blank" class="text-primary-400 hover:text-primary-300">Tampermonkey</a> (recommended, works on Chrome, Firefox, Edge, Safari)</li>
+                                                <li><a href="https://violentmonkey.github.io/" target="_blank" class="text-primary-400 hover:text-primary-300">Violentmonkey</a> (alternative for Firefox/Chrome)</li>
+                                                <li><a href="https://www.greasespot.net/" target="_blank" class="text-primary-400 hover:text-primary-300">Greasemonkey</a> (Firefox only)</li>
+                                            </ul>
+                                        </li>
+                                        <li>After installing the extension, click the "Install Script" button below to automatically install LeetCode2Anki Plus</li>
+                                        <li>When the userscript page opens in your userscript manager, click the "Install" or "OK" button</li>
+                                        <li>Navigate to any LeetCode problem page to start using it</li>
+                                    </ol>
+                                    <div class="flex justify-center mt-8">
+                                        <a href="https://github.com/UjjwalSharma01/leetcode2anki-plus/raw/main/leetcode2ankibyUjjwal.user.js" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                                            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                                            </svg>
+                                            Install Script
+                                        </a>
+                                    </div>
+                                    <div class="bg-darkcard border border-gray-700 rounded-lg p-4 mt-6">
+                                        <div class="flex items-start">
+                                            <div class="flex-shrink-0">
+                                                <svg class="h-5 w-5 text-yellow-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2h-1V9z" clip-rule="evenodd" />
+                                                </svg>
+                                            </div>
+                                            <div class="ml-3">
+                                                <h3 class="text-sm font-medium text-yellow-300">Manual Installation</h3>
+                                                <p class="mt-2 text-sm text-gray-400">
+                                                    If the one-click installation doesn't work, you can manually create a new script in your userscript manager and copy the code from the <a href="https://github.com/UjjwalSharma01/leetcode2anki-plus/blob/main/leetcode2ankibyUjjwal.user.js" target="_blank" class="text-primary-400 hover:text-primary-300">GitHub repository</a>.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-8 md:mt-0 md:col-span-2">
+                                <div class="bg-darkcard border border-gray-700 p-6 rounded-lg shadow-lg h-full">
+                                    <div class="flex flex-col items-center justify-center h-full">
+                                        <img src="https://i.imgur.com/mKfCM4j.png" alt="Script installation" class="max-w-full rounded-lg shadow-md installation-image mb-4">
+                                        <p class="text-sm text-gray-400 text-center mb-4">After installation, you'll see these buttons on solved LeetCode problems</p>
+                                        <div class="flex flex-col gap-3 w-full">
+                                            <div class="flex bg-gray-800 rounded p-2 items-center">
+                                                <svg class="w-5 h-5 text-primary-500 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
+                                                </svg>
+                                                <span class="text-sm text-gray-300">Works on new and old LeetCode UI</span>
+                                            </div>
+                                            <div class="flex bg-gray-800 rounded p-2 items-center">
+                                                <svg class="w-5 h-5 text-primary-500 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd" />
+                                                </svg>
+                                                <span class="text-sm text-gray-300">Automatic code detection</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Step 4: Configuration -->
                     <div id="config-step" class="installation-panel hidden">
                         <div class="md:grid md:grid-cols-5 md:gap-8">
-                            <!-- Configuration content -->
+                            <div class="md:col-span-3">
+                                <h3 class="text-lg font-medium text-white mb-4">Configuring LeetCode2Anki Plus</h3>
+                                <div class="space-y-4 text-gray-300">
+                                    <p>After installing the script, you need to customize it with your own settings:</p>
+                                    <ol class="list-decimal pl-5 space-y-4">
+                                        <li>Open your userscript manager (e.g., click on the Tampermonkey icon in your browser)</li>
+                                        <li>Select "Dashboard" and then find and edit "LeetCode2Anki Plus"</li>
+                                        <li>Look for the configuration section at the top of the script:</li>
+                                        <li class="p-3 bg-gray-800 rounded-md font-mono text-xs leading-relaxed">
+                                            <span class="text-green-400">// Configuration - Customize these values</span><br/>
+                                            <span class="text-blue-400">const</span> deckName = <span class="text-yellow-300">'LeetCode'</span>;  <span class="text-green-400">// Your Anki deck name</span><br/>
+                                            <span class="text-blue-400">const</span> modelName = <span class="text-yellow-300">'Basic - LeetCode2Anki'</span>;  <span class="text-green-400">// Your Anki model name</span><br/>
+                                            <span class="text-blue-400">const</span> language = <span class="text-yellow-300">'Python'</span>;  <span class="text-green-400">// Your preferred programming language</span><br/>
+                                            <span class="text-blue-400">const</span> langShortName = <span class="text-yellow-300">'py'</span>;  <span class="text-green-400">// Language code for syntax highlighting</span><br/>
+                                            <span class="text-blue-400">const</span> googleScriptUrl = <span class="text-yellow-300">'YOUR_SCRIPT_URL'</span>;  <span class="text-green-400">// Paste your Google Apps Script URL here</span>
+                                        </li>
+                                        <li>Update the variables with your own values:
+                                            <ul class="list-disc pl-5 mt-2 space-y-1">
+                                                <li><code class="bg-gray-700 px-1 rounded">deckName</code>: The name of your Anki deck (create this in Anki if it doesn't exist)</li>
+                                                <li><code class="bg-gray-700 px-1 rounded">modelName</code>: The name for the card template (can leave as default)</li>
+                                                <li><code class="bg-gray-700 px-1 rounded">language</code>: Your preferred programming language (e.g., Python, JavaScript, Java)</li>
+                                                <li><code class="bg-gray-700 px-1 rounded">langShortName</code>: Short code for your language (py for Python, js for JavaScript)</li>
+                                                <li><code class="bg-gray-700 px-1 rounded">googleScriptUrl</code>: The web app URL from your Google Apps Script deployment</li>
+                                            </ul>
+                                        </li>
+                                        <li>Save the script (Ctrl+S or Cmd+S)</li>
+                                    </ol>
+                                    <div class="bg-primary-900/20 border border-primary-700 rounded-lg p-4 mt-6">
+                                        <div class="flex items-start">
+                                            <div class="flex-shrink-0">
+                                                <svg class="h-5 w-5 text-primary-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                                    <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                                </svg>
+                                            </div>
+                                            <div class="ml-3">
+                                                <h3 class="text-sm font-medium text-primary-400">Ready to Use!</h3>
+                                                <p class="mt-2 text-sm text-gray-300">
+                                                    You're all set! Solve a LeetCode problem and look for the "Save to Anki" and "Save to Sheet" buttons in the bottom right corner of the page. Remember that Anki must be running with AnkiConnect active when using the plugin.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-8 md:mt-0 md:col-span-2">
+                                <div class="bg-darkcard border border-gray-700 p-6 rounded-lg shadow-lg h-full">
+                                    <div class="flex flex-col items-center justify-center h-full">
+                                        <img src="https://i.imgur.com/Y6XhDxT.png" alt="Configuration" class="max-w-full rounded-lg shadow-md installation-image mb-4">
+                                        <p class="text-sm text-gray-400 text-center mb-6">Edit the script configuration to match your setup</p>
+                                        <div class="bg-gray-800/70 p-4 rounded-lg w-full mt-2">
+                                            <h4 class="text-sm font-semibold text-primary-400 mb-3">Supported Languages:</h4>
+                                            <div class="grid grid-cols-2 gap-2 text-xs text-gray-300">
+                                                <div class="flex items-center">
+                                                    <span class="w-3 h-3 bg-blue-500 rounded-full mr-2"></span>
+                                                    <span>Python (py)</span>
+                                                </div>
+                                                <div class="flex items-center">
+                                                    <span class="w-3 h-3 bg-yellow-500 rounded-full mr-2"></span>
+                                                    <span>JavaScript (js)</span>
+                                                </div>
+                                                <div class="flex items-center">
+                                                    <span class="w-3 h-3 bg-orange-500 rounded-full mr-2"></span>
+                                                    <span>Java (java)</span>
+                                                </div>
+                                                <div class="flex items-center">
+                                                    <span class="w-3 h-3 bg-green-500 rounded-full mr-2"></span>
+                                                    <span>C++ (cpp)</span>
+                                                </div>
+                                                <div class="flex items-center">
+                                                    <span class="w-3 h-3 bg-red-500 rounded-full mr-2"></span>
+                                                    <span>Ruby (rb)</span>
+                                                </div>
+                                                <div class="flex items-center">
+                                                    <span class="w-3 h-3 bg-purple-500 rounded-full mr-2"></span>
+                                                    <span>C# (cs)</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -627,99 +936,101 @@
             <p class="max-w-xl mt-5 mx-auto text-xl text-gray-400">Find answers to common questions about LeetCode2Anki Plus</p>
         </div>
 
-        <div class="grid md:grid-cols-2 gap-6 md:gap-8" x-data="{open: null}">
+        <!-- FAQ items -->
+        <div class="flex flex-col space-y-6" x-data="{open: null}">
             <!-- FAQ Item 1 -->
             <div class="faq-item bg-darkcard rounded-lg border border-gray-800 shadow-lg overflow-hidden"
-                 x-data="{id: 1}" :class="{'border-primary-500': open === 1}">
-                <button class="flex justify-between items-center w-full px-6 py-5 text-left" 
+                 x-data="{id: 1}" :class="{'border-primary-500 shadow-primary-500/30': open === 1}">
+                <button class="flex justify-between items-center w-full px-6 py-5 text-left transition-colors duration-300" 
                         @click="open = open === 1 ? null : 1">
                     <span class="text-lg font-medium text-white">Do I need to keep Anki open while using this?</span>
-                    <svg class="h-5 w-5 text-gray-400" :class="{'transform rotate-180': open === 1}" 
+                    <svg class="h-5 w-5 text-gray-400 transition-transform duration-500" :class="{'transform rotate-180': open === 1}" 
                          xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                     </svg>
                 </button>
-                <div class="px-6 pb-5" x-show="open === 1" x-collapse>
+                <div class="px-6 pb-6 pt-2" x-show="open === 1" x-cloak x-collapse>
                     <p class="text-gray-300">Yes, Anki needs to be running with AnkiConnect active for the script to communicate with it. The connection is local and works through the AnkiConnect add-on.</p>
                 </div>
             </div>
             
+            <!-- Update all other FAQ items with the same pattern - adding pb-6 to the content div and transition classes -->
             <!-- FAQ Item 2 -->
             <div class="faq-item bg-darkcard rounded-lg border border-gray-800 shadow-lg overflow-hidden"
-                 x-data="{id: 2}" :class="{'border-primary-500': open === 2}">
-                <button class="flex justify-between items-center w-full px-6 py-5 text-left" 
+                 x-data="{id: 2}" :class="{'border-primary-500 shadow-primary-500/30': open === 2}">
+                <button class="flex justify-between items-center w-full px-6 py-5 text-left transition-colors duration-300" 
                         @click="open = open === 2 ? null : 2">
                     <span class="text-lg font-medium text-white">How do I customize the Anki card format?</span>
-                    <svg class="h-5 w-5 text-gray-400" :class="{'transform rotate-180': open === 2}" 
+                    <svg class="h-5 w-5 text-gray-400 transition-transform duration-500" :class="{'transform rotate-180': open === 2}" 
                          xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                     </svg>
                 </button>
-                <div class="px-6 pb-5" x-show="open === 2" x-collapse>
+                <div class="px-6 pb-6 pt-2" x-show="open === 2" x-cloak x-collapse>
                     <p class="text-gray-300">You can edit the template by modifying the <code class="bg-gray-800 px-1 py-0.5 rounded text-primary-300">frontSide</code> and <code class="bg-gray-800 px-1 py-0.5 rounded text-primary-300">backSide</code> variables in the userscript. The script uses HTML and CSS for formatting. After making changes, you'll need to delete and recreate the card model in Anki for changes to take effect.</p>
                 </div>
             </div>
             
             <!-- FAQ Item 3 -->
             <div class="faq-item bg-darkcard rounded-lg border border-gray-800 shadow-lg overflow-hidden"
-                 x-data="{id: 3}" :class="{'border-primary-500': open === 3}">
-                <button class="flex justify-between items-center w-full px-6 py-5 text-left" 
+                 x-data="{id: 3}" :class="{'border-primary-500 shadow-primary-500/30': open === 3}">
+                <button class="flex justify-between items-center w-full px-6 py-5 text-left transition-colors duration-300" 
                         @click="open = open === 3 ? null : 3">
                     <span class="text-lg font-medium text-white">Does it work with the new LeetCode UI?</span>
-                    <svg class="h-5 w-5 text-gray-400" :class="{'transform rotate-180': open === 3}" 
+                    <svg class="h-5 w-5 text-gray-400 transition-transform duration-500" :class="{'transform rotate-180': open === 3}" 
                          xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                     </svg>
                 </button>
-                <div class="px-6 pb-5" x-show="open === 3" x-collapse>
+                <div class="px-6 pb-6 pt-2" x-show="open === 3" x-cloak x-collapse>
                     <p class="text-gray-300">Yes, LeetCode2Anki Plus has been designed to work with both the old and new LeetCode UI. It uses multiple detection strategies to find problem data and your code regardless of the UI version.</p>
                 </div>
             </div>
             
             <!-- FAQ Item 4 -->
             <div class="faq-item bg-darkcard rounded-lg border border-gray-800 shadow-lg overflow-hidden"
-                 x-data="{id: 4}" :class="{'border-primary-500': open === 4}">
-                <button class="flex justify-between items-center w-full px-6 py-5 text-left" 
+                 x-data="{id: 4}" :class="{'border-primary-500 shadow-primary-500/30': open === 4}">
+                <button class="flex justify-between items-center w-full px-6 py-5 text-left transition-colors duration-300" 
                         @click="open = open === 4 ? null : 4">
                     <span class="text-lg font-medium text-white">Can I use a different programming language?</span>
-                    <svg class="h-5 w-5 text-gray-400" :class="{'transform rotate-180': open === 4}" 
+                    <svg class="h-5 w-5 text-gray-400 transition-transform duration-500" :class="{'transform rotate-180': open === 4}" 
                          xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                     </svg>
                 </button>
-                <div class="px-6 pb-5" x-show="open === 4" x-collapse>
+                <div class="px-6 pb-6 pt-2" x-show="open === 4" x-cloak x-collapse>
                     <p class="text-gray-300">Yes, you can customize the language by changing the <code class="bg-gray-800 px-1 py-0.5 rounded text-primary-300">language</code> and <code class="bg-gray-800 px-1 py-0.5 rounded text-primary-300">langShortName</code> variables in the script. For example, for Python use <code class="bg-gray-800 px-1 py-0.5 rounded text-primary-300">language = 'Python'</code> and <code class="bg-gray-800 px-1 py-0.5 rounded text-primary-300">langShortName = 'py'</code>.</p>
                 </div>
             </div>
             
             <!-- FAQ Item 5 -->
             <div class="faq-item bg-darkcard rounded-lg border border-gray-800 shadow-lg overflow-hidden"
-                 x-data="{id: 5}" :class="{'border-primary-500': open === 5}">
-                <button class="flex justify-between items-center w-full px-6 py-5 text-left" 
+                 x-data="{id: 5}" :class="{'border-primary-500 shadow-primary-500/30': open === 5}">
+                <button class="flex justify-between items-center w-full px-6 py-5 text-left transition-colors duration-300" 
                         @click="open = open === 5 ? null : 5">
                     <span class="text-lg font-medium text-white">Is my data secure with the Google Sheets integration?</span>
-                    <svg class="h-5 w-5 text-gray-400" :class="{'transform rotate-180': open === 5}" 
+                    <svg class="h-5 w-5 text-gray-400 transition-transform duration-500" :class="{'transform rotate-180': open === 5}" 
                          xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                     </svg>
                 </button>
-                <div class="px-6 pb-5" x-show="open === 5" x-collapse>
+                <div class="px-6 pb-6 pt-2" x-show="open === 5" x-cloak x-collapse>
                     <p class="text-gray-300">The Google Sheets integration uses your own Google account and Apps Script. The data is stored in your own Google Sheet that only you (and anyone you share it with) can access. The script doesn't send your code or problem data to any third-party servers.</p>
                 </div>
             </div>
             
             <!-- FAQ Item 6 -->
             <div class="faq-item bg-darkcard rounded-lg border border-gray-800 shadow-lg overflow-hidden"
-                 x-data="{id: 6}" :class="{'border-primary-500': open === 6}">
-                <button class="flex justify-between items-center w-full px-6 py-5 text-left" 
+                 x-data="{id: 6}" :class="{'border-primary-500 shadow-primary-500/30': open === 6}">
+                <button class="flex justify-between items-center w-full px-6 py-5 text-left transition-colors duration-300" 
                         @click="open = open === 6 ? null : 6">
                     <span class="text-lg font-medium text-white">What if I get connection errors?</span>
-                    <svg class="h-5 w-5 text-gray-400" :class="{'transform rotate-180': open === 6}" 
+                    <svg class="h-5 w-5 text-gray-400 transition-transform duration-500" :class="{'transform rotate-180': open === 6}" 
                          xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                     </svg>
                 </button>
-                <div class="px-6 pb-5" x-show="open === 6" x-collapse>
+                <div class="px-6 pb-6 pt-2" x-show="open === 6" x-cloak x-collapse>
                     <p class="text-gray-300">The script includes retry logic with exponential backoff for Google Sheets connections. For Anki connection issues, ensure Anki is running and AnkiConnect is installed correctly. Also, check that port 8765 is not blocked by your firewall.</p>
                 </div>
             </div>
@@ -735,10 +1046,7 @@
                 <div class="flex items-center">
                     <svg class="h-8 w-8 text-primary-500" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                    <span class="ml-2 text-xl font-bold text-white">LeetCode2Anki<span class="text-primary-500">+</span></span>
+                        <span class="ml-2 text-xl font-bold text-white">LeetCode2Anki<span class="text-primary-500">+</span></span>
                 </div>
                 <p class="mt-4 text-gray-400 text-sm">Enhance your LeetCode practice with spaced repetition learning and progress tracking.</p>
                 <div class="mt-6 flex space-x-4">
@@ -794,5 +1102,65 @@
 <script src="js/main.js"></script>
 <script src="js/enhanced.js"></script>
 <script src="js/particles.js"></script>
+
+<!-- Inline script to ensure installation tabs work correctly -->
+<script>
+    // Ensure the installation tabs are properly initialized
+    document.addEventListener('DOMContentLoaded', function() {
+        // Set initial active panel and tab
+        const tabButtons = document.querySelectorAll('.installation-tab');
+        const tabPanels = document.querySelectorAll('.installation-panel');
+        
+        if (tabButtons.length > 0 && tabPanels.length > 0) {
+            // First, hide all panels
+            tabPanels.forEach(panel => {
+                panel.style.display = 'none';
+                panel.classList.remove('active');
+                panel.classList.add('hidden');
+            });
+            
+            // Then activate the first panel
+            tabButtons[0].classList.add('active');
+            const firstPanelId = tabButtons[0].getAttribute('data-target');
+            const firstPanel = document.getElementById(firstPanelId);
+            
+            if (firstPanel) {
+                firstPanel.style.display = 'block';
+                firstPanel.classList.add('active');
+                firstPanel.classList.remove('hidden');
+            }
+            
+            // Add click handlers to tabs
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const target = this.getAttribute('data-target');
+                    
+                    // Hide all panels
+                    tabPanels.forEach(panel => {
+                        panel.style.display = 'none';
+                        panel.classList.remove('active');
+                        panel.classList.add('hidden');
+                    });
+                    
+                    // Remove active class from all buttons
+                    tabButtons.forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    
+                    // Add active class to current button
+                    this.classList.add('active');
+                    
+                    // Show current panel
+                    const panel = document.getElementById(target);
+                    if (panel) {
+                        panel.style.display = 'block';
+                        panel.classList.add('active');
+                        panel.classList.remove('hidden');
+                    }
+                });
+            });
+        }
+    });
+</script>
 </body>
 </html>
