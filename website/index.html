@@ -330,14 +330,16 @@
                 </div>
 
                 <!-- Feature 6 -->
-                <div class="relative feature-card p-6 bg-darkcard rounded-lg shadow-xl border border-gray-800">
+                <div class="relative feature-card p-6 bg-darkcard rounded-lg shadow-xl border border-gray-800 flex flex-col min-h-[200px]">
                     <div class="absolute -top-4 -left-4 bg-primary-600 rounded-lg w-12 h-12 flex items-center justify-center shadow-lg">
                         <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
                         </svg>
                     </div>
-                    <h3 class="mt-3 text-lg font-medium text-white">Automatic Retries</h3>
-                    <p class="mt-2 text-gray-400">Smart retry mechanism with exponential backoff ensures data is saved even with unstable connections.</p>
+                    <div class="flex-grow">
+                        <h3 class="mt-3 text-lg font-medium text-white">Automatic Retries</h3>
+                        <p class="mt-2 text-gray-400">Smart retry mechanism with exponential backoff ensures data is saved even with unstable connections.</p>
+                    </div>
                 </div>
             </div>
 
@@ -909,18 +911,6 @@ function doPost(e) {
                     <button class="demo-nav-btn" aria-label="Step 2"></button>
                     <button class="demo-nav-btn" aria-label="Step 3"></button>
                     <button class="demo-nav-btn" aria-label="Step 4"></button>
-                </div>
-            </div>
-        </div>
-        
-        <div class="mt-20">
-            <div class="video-demo-section">
-                <div class="video-placeholder">
-                    <button class="play-button flex items-center justify-center bg-primary-600 hover:bg-primary-700 text-white rounded-full w-16 h-16 transition-transform transform hover:scale-110">
-                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path>
-                        </svg>
-                    </button>
                 </div>
             </div>
         </div>

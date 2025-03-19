@@ -910,6 +910,10 @@ video {
   max-height: 15rem;
 }
 
+.min-h-\[200px\] {
+  min-height: 200px;
+}
+
 .w-12 {
   width: 3rem;
 }
@@ -972,6 +976,10 @@ video {
 
 .flex-shrink-0 {
   flex-shrink: 0;
+}
+
+.flex-grow {
+  flex-grow: 1;
 }
 
 .-translate-x-1\/2 {
