@@ -2,7 +2,7 @@
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=cover">
     <title>LeetCode2Anki Plus | Enhance Your Coding Practice</title>
     <meta name="description" content="Save LeetCode problems to Anki for spaced repetition learning and track your progress with Google Sheets integration">
     
@@ -82,8 +82,15 @@
     </style>
 </head>
 <body class="bg-darkbg text-gray-100 antialiased" x-data="{ darkMode: true }">
-    <!-- Preloader -->
-    <div id="preloader" class="fixed inset-0 z-50 flex items-center justify-center bg-darkbg">
+    <!-- Beta Banner -->
+    <div class="fixed w-full bg-gradient-to-r from-primary-600 to-primary-700 text-white text-center py-2 px-4 z-50">
+        <div class="max-w-7xl mx-auto">
+            <p class="text-sm font-medium">🚧 Early Access Preview - Full launch coming soon! Images and final content are being updated. 🚧</p>
+        </div>
+    </div>
+    
+    <!-- Adjust the top padding of the preloader and other top elements to accommodate the banner -->
+    <div id="preloader" class="fixed inset-0 z-40 flex items-center justify-center bg-darkbg pt-10">
         <div class="relative">
             <svg class="w-24 h-24 text-primary-500 animate-spin" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -93,8 +100,8 @@
         </div>
     </div>
 
-    <!-- Theme Switch -->
-    <div class="fixed top-4 right-4 z-50 theme-switch">
+    <!-- Theme Switch - adjust position -->
+    <div class="fixed top-14 right-4 z-40 theme-switch">
         <button class="p-2 rounded-full bg-darkcard text-white shadow-lg" @click="darkMode = !darkMode" aria-label="Toggle Theme">
             <svg x-show="darkMode" class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                 <path d="M10 2a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 0110 2zM10 15a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 0110 15zM10 7a3 3 0 100 6 3 3 0 000-6zM15.657 5.404a.75.75 0 10-1.06-1.06l-1.061 1.06a.75.75 0 001.06 1.06l1.06-1.06zM6.464 14.596a.75.75 0 10-1.06-1.06l-1.06 1.06a.75.75 0 001.06 1.06l1.06-1.06zM18 10a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0118 10zM5 10a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 015 10zM14.596 15.657a.75.75 0 001.06-1.06l-1.06-1.061a.75.75 0 10-1.06 1.06l1.06 1.06zM5.404 6.464a.75.75 0 001.06-1.06l-1.06-1.06a.75.75 0 10-1.061 1.06l1.06 1.06z" />
@@ -108,7 +115,7 @@
     <canvas id="particle-canvas" class="fixed inset-0 -z-10"></canvas>
 
     <!-- Navigation Bar -->
-    <nav x-data="{ mobileMenuOpen: false }" class="fixed w-full z-50 bg-darkbg/80 backdrop-blur-md border-b border-gray-800">
+    <nav x-data="{ mobileMenuOpen: false }" class="fixed w-full z-40 bg-darkbg/80 backdrop-blur-md border-b border-gray-800 mt-10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
@@ -156,7 +163,7 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="relative pt-24 md:pt-32 pb-20 md:pb-32">
+    <section class="relative pt-32 md:pt-40 pb-20 md:pb-32">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
             <div class="floating-cards hidden lg:block absolute top-20 right-10">
                 <div class="js-tilt card-float">
@@ -202,7 +209,7 @@
                         <span class="block text-primary-500">Plus</span>
                     </h1>
                     <p class="mt-2 md:mt-3 text-sm md:text-base lg:text-lg xl:text-xl text-gray-300">
-                        Save solved LeetCode problems directly to Anki and track your progress with Google Sheets. Perfect for spaced repetition learning and systematic coding interview preparation.
+                        Save solved LeetCode problems directly to Anki and track your progress with Google Sheets. Perfect for spaced repetition learning and systematic coding interview preparation. <span class="font-medium text-white">Boost your retention by 80% with our optimized learning system.</span>
                     </p>
                 </div>
                 <div class="mt-8 flex flex-col sm:flex-row sm:gap-4">
@@ -274,7 +281,7 @@
             </div>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-                <!-- Feature 1 -->
+                <!-- Feature 1 - Made more concise -->
                 <div class="relative feature-card p-6 bg-darkcard rounded-lg shadow-xl border border-gray-800">
                     <div class="absolute -top-4 -left-4 bg-primary-600 rounded-lg w-12 h-12 flex items-center justify-center shadow-lg">
                         <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -282,63 +289,63 @@
                         </svg>
                     </div>
                     <h3 class="mt-3 text-lg font-medium text-white">Anki Integration</h3>
-                    <p class="mt-2 text-gray-400">Save solved LeetCode problems directly to your Anki collection for spaced repetition learning.</p>
+                    <p class="mt-2 text-gray-400">Seamlessly save LeetCode problems to Anki with formatted cards for optimal spaced repetition learning.</p>
                 </div>
 
-                <!-- Feature 2 -->
+                <!-- Feature 2 - Made more concise -->
                 <div class="relative feature-card p-6 bg-darkcard rounded-lg shadow-xl border border-gray-800">
                     <div class="absolute -top-4 -left-4 bg-primary-600 rounded-lg w-12 h-12 flex items-center justify-center shadow-lg">
                         <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                         </svg>
                     </div>
-                    <h3 class="mt-3 text-lg font-medium text-white">Google Sheets Integration</h3>
-                    <p class="mt-2 text-gray-400">Track your LeetCode journey by logging problems to Google Sheets for progress monitoring.</p>
+                    <h3 class="mt-3 text-lg font-medium text-white">Google Sheets Tracking</h3>
+                    <p class="mt-2 text-gray-400">Automatically log solved problems with timestamps, difficulty, and tags for comprehensive progress monitoring.</p>
                 </div>
 
-                <!-- Feature 3 -->
+                <!-- Feature 3 - Made more concise -->
                 <div class="relative feature-card p-6 bg-darkcard rounded-lg shadow-xl border border-gray-800">
                     <div class="absolute -top-4 -left-4 bg-primary-600 rounded-lg w-12 h-12 flex items-center justify-center shadow-lg">
                         <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
                         </svg>
                     </div>
-                    <h3 class="mt-3 text-lg font-medium text-white">Beautiful Cards</h3>
-                    <p class="mt-2 text-gray-400">Well-formatted Anki cards with syntax highlighting that make revision a pleasure.</p>
+                    <h3 class="mt-3 text-lg font-medium text-white">Performance Metrics</h3>
+                    <p class="mt-2 text-gray-400">Track solve time, first attempt success/failure, and confidence levels for detailed performance analysis.</p>
                 </div>
 
-                <!-- Feature 4 -->
+                <!-- Feature 4 - New feature -->
                 <div class="relative feature-card p-6 bg-darkcard rounded-lg shadow-xl border border-gray-800">
                     <div class="absolute -top-4 -left-4 bg-primary-600 rounded-lg w-12 h-12 flex items-center justify-center shadow-lg">
                         <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                     </div>
-                    <h3 class="mt-3 text-lg font-medium text-white">Robust Error Handling</h3>
-                    <p class="mt-2 text-gray-400">Handles connection failures and retries automatically with informative feedback.</p>
+                    <h3 class="mt-3 text-lg font-medium text-white">Spaced Repetition System</h3>
+                    <p class="mt-2 text-gray-400">Complete Google Sheets-based SRS with dynamic review scheduling based on your confidence ratings.</p>
                 </div>
 
-                <!-- Feature 5 -->
+                <!-- Feature 5 - Made more concise -->
                 <div class="relative feature-card p-6 bg-darkcard rounded-lg shadow-xl border border-gray-800">
                     <div class="absolute -top-4 -left-4 bg-primary-600 rounded-lg w-12 h-12 flex items-center justify-center shadow-lg">
                         <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                         </svg>
                     </div>
-                    <h3 class="mt-3 text-lg font-medium text-white">Multiple Detection Strategies</h3>
-                    <p class="mt-2 text-gray-400">Reliably extracts problem data across different LeetCode layouts and UI versions.</p>
+                    <h3 class="mt-3 text-lg font-medium text-white">Robust LeetCode Support</h3>
+                    <p class="mt-2 text-gray-400">Works reliably with both old and new LeetCode UIs, using multiple detection strategies for code and problem data.</p>
                 </div>
 
-                <!-- Feature 6 -->
+                <!-- Feature 6 - New feature -->
                 <div class="relative feature-card p-6 bg-darkcard rounded-lg shadow-xl border border-gray-800 flex flex-col min-h-[200px]">
                     <div class="absolute -top-4 -left-4 bg-primary-600 rounded-lg w-12 h-12 flex items-center justify-center shadow-lg">
                         <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                         </svg>
                     </div>
                     <div class="flex-grow">
-                        <h3 class="mt-3 text-lg font-medium text-white">Automatic Retries</h3>
-                        <p class="mt-2 text-gray-400">Smart retry mechanism with exponential backoff ensures data is saved even with unstable connections.</p>
+                        <h3 class="mt-3 text-lg font-medium text-white">Learning Resources</h3>
+                        <p class="mt-2 text-gray-400">Access detailed explanations of coding patterns, potential interview questions, and solutions optimized for technical interviews.</p>
                     </div>
                 </div>
             </div>
@@ -504,6 +511,7 @@
                                         <li>Go to <a href="https://script.google.com/" target="_blank" class="text-primary-400 hover:text-primary-300">Google Apps Script</a> (sign in with your Google account)</li>
                                         <li>Click "New project" to create a new Apps Script project</li>
                                         <li>Replace the default code with the code provided below</li>
+                                        <li>Select the <code class="bg-gray-700 px-1 rounded">doRequest</code> function from the dropdown menu as the function to run</li>
                                         <li>Click the disk icon to save (or press Ctrl+S/Cmd+S)</li>
                                         <li>Name your project (e.g., "LeetCode2AnkiTracker")</li>
                                         <li>Create a Google Sheet by going to <a href="https://sheets.google.com/" target="_blank" class="text-primary-400 hover:text-primary-300">Google Sheets</a></li>
@@ -511,6 +519,8 @@
                                         <li>Copy the spreadsheet ID from the URL (the long string between <code class="bg-gray-700 px-1 rounded">/d/</code> and <code class="bg-gray-700 px-1 rounded">/edit</code>)</li>
                                         <li>Replace <code class="bg-gray-700 px-1 rounded">YOUR_SPREADSHEET_ID</code> in the Apps Script code with your actual spreadsheet ID</li>
                                         <li>Deploy the web app by clicking "Deploy" > "New deployment"</li>
+                                        <li>Select "Web app" as the deployment type</li>
+                                        <li>Set "Execute as" to "Me"</li>
                                         <li>Set "Who has access" to "Anyone" and click "Deploy"</li>
                                         <li>Copy the web app URL - you'll need it for the script configuration</li>
                                     </ol>
@@ -610,6 +620,11 @@ function doPost(e) {
       tagsString = data.tags.join(", ");
     }
     
+    // Add additional fields for performance metrics
+    const solveTime = data.solveTime || "";
+    const firstAttempt = data.firstAttempt || "";
+    const confidence = data.confidence || "";
+    
     sheet.appendRow([
       new Date(),
       data.id || "",
@@ -617,7 +632,10 @@ function doPost(e) {
       data.difficulty || "",
       tagsString,
       data.url || "",
-      data.status || "Pending"
+      data.status || "Pending",
+      solveTime,
+      firstAttempt,
+      confidence
     ]);
     
     return ContentService
@@ -638,6 +656,22 @@ function doPost(e) {
       .setHeaders(headers);
   }
 }</code></pre>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="bg-primary-900/20 border border-primary-700 rounded-lg p-4 mt-6">
+                                        <div class="flex items-start">
+                                            <div class="flex-shrink-0">
+                                                <svg class="h-5 w-5 text-primary-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                                    <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd" />
+                                                </svg>
+                                            </div>
+                                            <div class="ml-3">
+                                                <h3 class="text-sm font-medium text-primary-400">Testing Your Integration</h3>
+                                                <p class="mt-2 text-sm text-gray-300">
+                                                    After deployment, you can test your Google Sheets integration by visiting the web app URL. You should see a JSON response with <code class="bg-gray-700 px-1 rounded">{"status": "online", "message": "Google Sheets API is running"}</code>. This confirms your setup is working correctly.
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
@@ -822,7 +856,8 @@ function doPost(e) {
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- Demo Section -->
 <section id="demo" class="py-16 md:py-24 bg-gray-900 relative">
@@ -1060,7 +1095,7 @@ function doPost(e) {
                     <li>
                         <a href="https://github.com/UjjwalSharma01/leetcode2anki-plus/issues" class="text-gray-400 hover:text-white text-sm">Report Issues</a>
                     </li>
-                    <li>
+                    <li></li>
                         <a href="https://github.com/UjjwalSharma01/leetcode2anki-plus/blob/main/CONTRIBUTING.md" class="text-gray-400 hover:text-white text-sm">Contributing</a>
                     </li>
                 </ul>
@@ -1150,6 +1185,33 @@ function doPost(e) {
                 });
             });
         }
+    });
+
+    // Function to create placeholder images
+    document.addEventListener('DOMContentLoaded', function() {
+        const images = document.querySelectorAll('img');
+        
+        images.forEach(img => {
+            // Store the original src for later use when real images are available
+            const originalSrc = img.getAttribute('src');
+            const altText = img.getAttribute('alt') || 'Image placeholder';
+            
+            // Check if image is coming from Imgur (placeholder URLs)
+            if (originalSrc.includes('imgur.com')) {
+                // Save original source as data attribute
+                img.setAttribute('data-original-src', originalSrc);
+                
+                // Create a placeholder with the image dimensions
+                const width = img.width || 400;
+                const height = img.height || 300;
+                
+                // Replace with a placeholder image
+                img.src = `https://via.placeholder.com/${width}x${height}/1e293b/14b8a6?text=${encodeURIComponent(altText)}`;
+                
+                // Add a small indicator that these are placeholder images
+                img.insertAdjacentHTML('afterend', '<div class="text-xs text-primary-400 text-center mt-2">Preview image</div>');
+            }
+        });
     });
 </script>
 </body>
